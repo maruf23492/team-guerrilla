@@ -1,0 +1,23 @@
+import discord
+
+client = discord.Client()
+was_ready = False
+
+@client.event
+async def on_ready():
+    global was_ready
+    if not was_ready:
+        was_ready = True
+        try:
+            await main()
+        finally:
+            await client.logout()
+
+async def main():
+    print("Before:", client.guilds[0].me.activities)
+    await client.change_presence(status=discord.Status.online)
+    print("After:", client.guilds[0].me.activities)
+
+if __name__ == "__main__":
+    client.run(TOKEN_HERE)
+
